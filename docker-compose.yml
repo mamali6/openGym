@@ -66,7 +66,7 @@ services:
   # Builds the React frontend (multi-stage) and serves it, proxying /api → api
   # and the exercise media from the shared volume. Single origin for passkeys.
   web:
-    image: ghcr.io/duartesantos8/opengym-web:latest
+    image: opengym-web-fa:latest
     build:
       context: .
       dockerfile: web/Dockerfile
