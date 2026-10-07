@@ -1471,6 +1471,7 @@ body.chips-dragging *{cursor:inherit}
 /* ---------------------------------------------------------------- misc --- */
 .empty{text-align:center;color:var(--label-2);padding:44px 20px;font-size:15px;line-height:1.45}
 .empty .ico{font-size:34px;color:var(--label-2);margin-bottom:12px;display:flex;justify-content:center}
+[dir="rtl"] .steps-list { list-style-type: persian; }
 .steps-list{
   padding-inline-start:18px;color:var(--label-2);font-size:15px;line-height:1.5;
   display:flex;flex-direction:column;gap:9px;
