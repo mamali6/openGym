@@ -2,6 +2,11 @@
 
 <img src="assets/banner.png" alt="openGym" width="720">
 
+<br>
+
+> 🇮🇷 **پشتیبانی کامل از زبان فارسی (Persian Localization):** برای مستندات و راهنمای راه‌اندازی فارسی، فایل **[README.fa.md](README.fa.md)** را ببینید.
+
+
 **A self-hosted gym and body-weight tracker you actually own.**
 
 Plan your week, run guided workouts, log every set and your body weight —<br>
