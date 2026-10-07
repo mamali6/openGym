@@ -11,16 +11,16 @@
     var s = JSON.parse(localStorage.getItem('gym_state_v1') || '{}');
     var l = s.lang || ((navigator.language || '').slice(0, 2) === 'ar' ? 'ar' : 'en');
     document.documentElement.lang = l;
-    document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.dir = (l === 'ar' || l === 'fa') ? 'rtl' : 'ltr';
   } catch (e) {}
 </script>
-<title>openGym</title>
-<meta name="description" content="Personal gym & body weight tracker">
+<title>اوپن‌جیم | مربی و ردیاب بدنسازی</title>
+<meta name="description" content="سامانه جامع ردیابی تمرینات، وزن بدن و مربی هوشمند بدنسازی">
 <meta name="theme-color" content="#0c0e12">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="openGym">
+<meta name="apple-mobile-web-app-title" content="اوپن‌جیم">
 <!-- use-credentials: browsers fetch the manifest without cookies, even same-origin; behind an auth
      proxy (Authelia, Cloudflare Access, Teleport…) that fetch is a login redirect and the Home Screen
      icon comes out generic. iOS 26 reads the icon from the manifest, so this is where it shows. -->

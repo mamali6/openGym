@@ -1,7 +1,7 @@
 {
-  "name": "openGym",
-  "short_name": "openGym",
-  "description": "Personal gym & body weight tracker",
+  "name": "اوپن‌جیم | مربی و ردیاب بدنسازی",
+  "short_name": "اوپن‌جیم",
+  "description": "سامانه جامع ردیابی تمرینات، وزن بدن و مربی هوشمند بدنسازی",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -9,7 +9,19 @@
   "background_color": "#0c0e12",
   "theme_color": "#0c0e12",
   "icons": [
-    { "src": "icon-180.png", "sizes": "180x180", "type": "image/png", "purpose": "any" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
-  ]
+    {
+      "src": "icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "dir": "rtl",
+  "lang": "fa"
 }
