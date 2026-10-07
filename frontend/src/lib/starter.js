@@ -26,6 +26,15 @@ const FULL_BODY = [
   ['fb-c', 'Full Body C', 'figureStrength', [['0739', 3, 10], ['0025', 2, 10], ['0027', 3, 10], ['0426', 2, 10], ['0586', 3, 12], ['0605', 3, 15]]]
 ]
 
+
+const BRO_SPLIT = [
+  ['chest', 'Chest Day (روز سینه)', 'chest', [['0025', 4, 8], ['0047', 4, 10], ['0251', 3, 10], ['0241', 3, 12]]],
+  ['back', 'Back Day (روز زیربغل)', 'pullup', [['2330', 4, 10], ['0027', 4, 8], ['1323', 3, 10], ['0085', 3, 8]]],
+  ['shoulders', 'Shoulders & Traps (روز سرشانه)', 'barbell', [['0426', 4, 8], ['0334', 4, 12], ['2292', 3, 12], ['0406', 4, 12]]],
+  ['legs', 'Leg Day (روز پا)', 'legs', [['0043', 4, 8], ['0739', 4, 10], ['0585', 3, 12], ['0586', 3, 12], ['0605', 4, 15]]],
+  ['arms', 'Arms Day (روز دست)', 'barbell', [['0031', 4, 8], ['0070', 3, 10], ['0313', 3, 10], ['0241', 4, 12]]]
+]
+
 const FIVE_BY_FIVE = [
   ['5x5-a', '5×5 A', 'barbell', [['0043', 5, 5], ['0025', 5, 5], ['0027', 5, 5]]],
   ['5x5-b', '5×5 B', 'barbell', [['0085', 5, 5], ['0426', 5, 5], ['2330', 5, 5]]],
@@ -38,7 +47,8 @@ const PLANS = {
   ppl: { routines: PPL, schedule: [[1, 'push'], [3, 'pull'], [5, 'legs']] },
   'upper-lower': { routines: UPPER_LOWER, schedule: [[1, 'upper-a'], [2, 'lower-a'], [4, 'upper-b'], [5, 'lower-b']] },
   'full-body': { routines: FULL_BODY, schedule: [[1, 'fb-a'], [3, 'fb-b'], [5, 'fb-c']] },
-  '5x5': { routines: FIVE_BY_FIVE, schedule: [[1, '5x5-a'], [3, '5x5-b'], [5, '5x5-c']] }
+  '5x5': { routines: FIVE_BY_FIVE, schedule: [[1, '5x5-a'], [3, '5x5-b'], [5, '5x5-c']] },
+  'bro-split': { routines: BRO_SPLIT, schedule: [[1, 'chest'], [2, 'back'], [3, 'shoulders'], [4, 'legs'], [5, 'arms']] }
 }
 
 const build = routines =>
