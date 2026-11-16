@@ -1,0 +1,82 @@
+# Build an unsigned iOS .ipa for AltStore / Sideloadly
+#
+# Mirrors the `build:ios` job in .gitlab-ci.yml (same mobile bundle, same
+# unsigned archive, same Payload packaging) but on GitHub's macOS runner,
+# because this VM has no macOS and Xcode does not run on Linux.
+#
+# One deliberate difference from the task brief: xcodebuild runs against the
+# *workspace* (App.xcworkspace), not the bare project — the app links its
+# Capacitor plugins through CocoaPods, and the .xcodeproj alone has no Pods
+# target, so `-project` fails to link. The GitLab job does the same.
+#
+# Triggered manually, or when the iOS shell itself changes. It never fires
+# on ordinary frontend changes — those are covered by test.yml.
+
+name: Build iOS IPA
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'frontend/ios/**'
+      - '.github/workflows/build-ios-ipa.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-ios-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7
+
+      # node:22-alpine in web/Dockerfile and api/Dockerfile — CI must match production.
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - run: npm ci
+        working-directory: frontend
+
+      # VITE_MOBILE build + `cap sync` into android/ and ios/.
+      # On macOS `cap sync` also runs `pod install` for ios/.
+      - run: npm run build:mobile
+        working-directory: frontend
+
+      - name: Archive (unsigned) and package the .ipa
+        working-directory: frontend
+        run: |
+          set -eu
+          VER="$(node -p "require('./package.json').version")"
+          # Build number = the Android versionCode, so both apps count the same way.
+          BUILD="$(sed -n 's/^ *versionCode \([0-9]*\).*/\1/p' android/app/build.gradle | sed -n 1p)"
+          [ -n "$BUILD" ] || { echo "could not read versionCode from android/app/build.gradle" >&2; exit 1; }
+          cd ios/App
+          xcodebuild -workspace App.xcworkspace -scheme App -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$PWD/build/App.xcarchive" \
+            MARKETING_VERSION="$VER" CURRENT_PROJECT_VERSION="$BUILD" \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            archive | tail -40
+          # An .ipa is a zip with the .app under Payload/.
+          rm -rf Payload && mkdir Payload
+          cp -R build/App.xcarchive/Products/Applications/App.app Payload/
+          zip -qr "$GITHUB_WORKSPACE/openGym-$VER-unsigned.ipa" Payload
+          cd "$GITHUB_WORKSPACE"
+          shasum -a 256 "openGym-$VER-unsigned.ipa" > "openGym-$VER-unsigned.ipa.sha256"
+          cat "openGym-$VER-unsigned.ipa.sha256"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: openGym-ios-ipa
+          path: |
+            openGym-*-unsigned.ipa
+            openGym-*-unsigned.ipa.sha256
+          retention-days: 30
